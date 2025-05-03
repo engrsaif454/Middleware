@@ -28,4 +28,41 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Super Admin Routes.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
+    Route::get('/superadmin/dashboard', function () {
+        return view('super-admin.dashboard');
+    })->name('superadmin.dashboard');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
+
+/*
+|--------------------------------------------------------------------------
+| User Routes.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
+    Route::get('/user/dashboard', function () {
+        return view('user.dashboard');
+    })->name('user.dashboard');
+});
+
+
+
 require __DIR__.'/auth.php';
